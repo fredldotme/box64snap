@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ -z "BOX64_LOG" ]; then
+    export BOX64_LOG=0
+fi
+if [ -z "BOX64_NOBANNER" ]; then
+    export BOX64_NOBANNER=1
+fi
+
+PREFIX="4k"
+if [ "$(getconf PAGESIZE)" = "16384" ]; then
+    PREFIX="16k"
+fi
+
+exec "$SNAP/$PREFIX/bin/box64"

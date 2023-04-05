@@ -1,0 +1,52 @@
+name: box64+gl4es
+version: "0.2.2"
+summary: Linux Userspace x86_64 Emulator with a twist
+description: |
+  Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64-bit little-endian).
+
+  You can find many Box64 videos on the MicroLinux, Pi Labs or The Byteman YouTube channels.
+
+  Since Box64 uses the native versions of some "system" libraries, like libc, libm, SDL, and OpenGL, it's easy to integrate and use with most applications, and performance can be surprisingly high in many cases. Take a look at thoses bench analysis for an example here.
+
+  Box64 integrates with DynaRec (dynamic recompiler) for the ARM64 platform, providing a speed boost between 5 to 10 times faster than using only the interpreter. Some high level information on how DynaRec works can be found here.
+grade: stable
+confinement: classic
+base: core22
+architectures:
+  - arm64
+
+apps:
+  box64:
+    environment:
+      LD_LIBRARY_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/usr/lib
+    command: box64
+    command-chain: [ bin/runner ]
+
+parts:
+  box64-4k:
+    source: https://github.com/ptitSeb/box64
+    source-type: git
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/4k
+    build-packages:
+      - cmake
+      - python3
+  box64-16k:
+    source: https://github.com/ptitSeb/box64
+    source-type: git
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/16k
+      - -DM1=1
+    build-packages:
+      - cmake
+      - python3
+  runner:
+    after: [ box64-4k, box64-16k ]
+    source: snap/local
+    plugin: nil
+    override-build: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp -av runner $SNAPCRAFT_PART_INSTALL/bin/
+
