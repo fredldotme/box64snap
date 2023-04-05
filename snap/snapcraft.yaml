@@ -1,4 +1,4 @@
-name: box64+gl4es
+name: box64-with-gl4es
 version: "0.2.2"
 summary: Linux Userspace x86_64 Emulator with a twist
 description: |
