@@ -1,5 +1,5 @@
 name: box64-with-gl4es
-version: "0.2.2"
+version: "latest"
 summary: Linux Userspace x86_64 Emulator with a twist
 description: |
   Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64-bit little-endian).
@@ -19,10 +19,18 @@ apps:
   box64:
     environment:
       LD_LIBRARY_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/usr/lib
-    command: box64
-    command-chain: [ bin/runner ]
+    command: runner
 
 parts:
+  gl4es:
+    source: https://github.com/ptitSeb/gl4es
+    source-type: git
+    plugin: cmake
+    cmake-parameters:
+      - -DNO_CONF_INSTALL=1
+    build-packages:
+      - cmake
+      - libx11-dev
   box64-4k:
     source: https://github.com/fredldotme/box64
     source-type: git
@@ -52,6 +60,6 @@ parts:
     source: snap/local
     plugin: nil
     override-build: |
-      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
-      cp -av runner $SNAPCRAFT_PART_INSTALL/bin/
+      mkdir -p $SNAPCRAFT_PART_INSTALL
+      cp -av runner $SNAPCRAFT_PART_INSTALL/runner
 

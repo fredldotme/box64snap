@@ -6,10 +6,16 @@ fi
 if [ -z "BOX64_NOBANNER" ]; then
     export BOX64_NOBANNER=1
 fi
+if [ -z "$BOX64_LD_LIBRARY_PATH" ]; then
+    export BOX64_LD_LIBRARY_PATH="$SNAP/usr/lib/x86_64-linux-gnu"
+fi
+if [ ! -z "$GL4ES" ]; then
+    export LD_LIBRARY_PATH="$SNAP/usr/lib/gl4es:$LD_LIBRARY_PATH"
+fi
 
 PREFIX="4k"
 if [ "$(getconf PAGESIZE)" = "16384" ]; then
     PREFIX="16k"
 fi
 
-exec "$SNAP/$PREFIX/bin/box64"
+exec "$SNAP/$PREFIX/bin/box64" $@
