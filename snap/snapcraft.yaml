@@ -24,21 +24,26 @@ apps:
 
 parts:
   box64-4k:
-    source: https://github.com/ptitSeb/box64
+    source: https://github.com/fredldotme/box64
     source-type: git
+    source-branch: no-etc
     plugin: cmake
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/4k
+      - -DNO_CONF_INSTALL=1
     build-packages:
       - cmake
       - python3
   box64-16k:
-    source: https://github.com/ptitSeb/box64
+    source: https://github.com/fredldotme/box64
     source-type: git
+    source-branch: no-etc
     plugin: cmake
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/16k
       - -DM1=1
+      - -DNO_CONF_INSTALL=1
+      - -DNO_LIB_INSTALL=1
     build-packages:
       - cmake
       - python3
