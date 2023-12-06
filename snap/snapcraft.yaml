@@ -19,7 +19,9 @@ apps:
   box64:
     environment:
       LD_LIBRARY_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/usr/lib
-    command: runner
+    command: bin/runner
+  setup:
+    command: bin/setup
 
 parts:
   gl4es:
@@ -32,9 +34,9 @@ parts:
       - cmake
       - libx11-dev
   box64-4k:
-    source: https://github.com/fredldotme/box64
+    source: https://github.com/ptitSeb/box64
     source-type: git
-    source-branch: no-etc
+    source-branch: main
     plugin: cmake
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/4k
@@ -43,9 +45,9 @@ parts:
       - cmake
       - python3
   box64-16k:
-    source: https://github.com/fredldotme/box64
+    source: https://github.com/ptitSeb/box64
     source-type: git
-    source-branch: no-etc
+    source-branch: main
     plugin: cmake
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/16k
@@ -58,8 +60,4 @@ parts:
   runner:
     after: [ box64-4k, box64-16k ]
     source: snap/local
-    plugin: nil
-    override-build: |
-      mkdir -p $SNAPCRAFT_PART_INSTALL
-      cp -av runner $SNAPCRAFT_PART_INSTALL/runner
-
+    plugin: dump
