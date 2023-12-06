@@ -14,11 +14,12 @@ confinement: classic
 base: core22
 architectures:
   - arm64
+compression: lzo
 
 apps:
   box64:
     environment:
-      LD_LIBRARY_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/usr/lib
+      LD_LIBRARY_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/usr/lib/:${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/pulseaudio
     command: bin/runner
   setup:
     command: bin/setup
@@ -61,3 +62,7 @@ parts:
     after: [ box64-4k, box64-16k ]
     source: snap/local
     plugin: dump
+    stage-packages:
+      - libsdl1.2-compat
+      - libsdl1.2debian
+      - libsdl2-2.0-0
