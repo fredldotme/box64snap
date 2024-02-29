@@ -1,9 +1,9 @@
 #!/bin/sh
 
-if [ -z "BOX64_LOG" ]; then
+if [ -z "$BOX64_LOG" ]; then
     export BOX64_LOG=0
 fi
-if [ -z "BOX64_NOBANNER" ]; then
+if [ -z "$BOX64_NOBANNER" ]; then
     export BOX64_NOBANNER=1
 fi
 if [ -z "$BOX64_LD_LIBRARY_PATH" ]; then
