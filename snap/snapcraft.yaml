@@ -8,19 +8,45 @@ description: |
 
   Since Box64 uses the native versions of some "system" libraries, like libc, libm, SDL, and OpenGL, it's easy to integrate and use with most applications, and performance can be surprisingly high in many cases. Take a look at thoses bench analysis for an example here.
 
-  Box64 integrates with DynaRec (dynamic recompiler) for the ARM64 platform, providing a speed boost between 5 to 10 times faster than using only the interpreter. Some high level information on how DynaRec works can be found here.
+  Box64 integrates with DynaRec (dynamic recompiler) for the ARM64 platform, providing a speed boost between 5 to 10 times faster than using only the interpreter.
 grade: stable
-confinement: classic
+confinement: strict
 base: core22
 architectures:
   - arm64
 compression: lzo
 
+plugs:
+  dot-wine:
+    interface: personal-files
+    write:
+      - $HOME/.wine
+  graphics-core22:
+    interface: content
+    target: $SNAP/graphics
+    default-provider: mesa-core22
+
+layout:
+  /usr/share/libdrm:
+    bind: $SNAP/graphics/libdrm
+  /usr/share/drirc.d:
+    symlink: $SNAP/graphics/drirc.d
+  /usr/share/X11/XErrorDB:
+    symlink: $SNAP/graphics/X11/XErrorDB
+  /usr/share/X11/locale:
+    symlink: $SNAP/graphics/X11/locale
+  /usr/share/zenity:
+    symlink: $SNAP/usr/share/zenity
+
 apps:
   box64:
     environment:
       LD_LIBRARY_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/usr/lib/:${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/pulseaudio
+    command-chain:
+      - bin/graphics-core22-wrapper
     command: bin/runner
+    extensions: [ gnome ]
+    plugs: [ dot-wine, home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service ]
   setup:
     command: bin/setup
 
@@ -63,6 +89,71 @@ parts:
     source: snap/local
     plugin: dump
     stage-packages:
+      - util-linux
+      - zenity
       - libsdl1.2-compat
       - libsdl1.2debian
       - libsdl2-2.0-0
+      - libvorbisfile3
+      - libalure1
+      - libalut0
+      - libatk-bridge2.0-0
+      - libatspi2.0-0
+      - libayatana-appindicator3-1
+      - libbz2-1.0
+      - libcairo2
+      - libcap2
+      - libcrypt1
+      - libcurl4
+      - libcairo2
+      - libdbus-glib-1-2
+      - libdbusmenu-glib4
+      - libevent-2.1-7
+      - libexpat1
+      - libfaudio0
+      - libfl2
+      - libasound2
+      - libbsd0
+      - libfuse2
+      - libfuse3-3
+      - libharfbuzz0b
+      - libnuma1
+      - libogg0
+      - libre0
+      - libsndfile1
+      - libtinfo6
+      - libusb-1.0-0
+      - libuuid1
+      - libvorbis0a
+      - libz3-4
+      - liblzma5
+      - libmpg123-0
+      - libnotify4
+      - libnsl2
+      - libnspr4
+      - libnss3
+      - libopenal1
+      - libpam0g
+      - libpango-1.0-0
+      - libpangocairo-1.0-0
+      - libpng16-16
+      - libsdl2-2.0-0
+      - libsdl2-gfx-1.0-0
+      - libsdl2-image-2.0-0
+      - libsdl2-mixer-2.0-0
+      - libsdl2-net-2.0-0
+      - libsdl2-ttf-2.0-0
+      - libselinux1
+      - libsmpeg0
+      - libunwind8
+      - libxml2
+      - libxslt1.1
+  graphics-core22:
+    after: [ runner ]
+    source: https://github.com/MirServer/graphics-core.git
+    plugin: dump
+    override-prime: |
+      craftctl default
+      ${CRAFT_PART_SRC}/bin/graphics-core22-cleanup mesa-core22 nvidia-core22
+    prime:
+    - bin/graphics-core22-wrapper

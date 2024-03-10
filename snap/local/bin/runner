@@ -18,4 +18,6 @@ if [ "$(getconf PAGESIZE)" = "16384" ]; then
     PREFIX="16k"
 fi
 
+export PATH="/snap/box64-with-gles/current/usr/bin:$PATH"
+
 exec "$SNAP/$PREFIX/bin/box64" $@

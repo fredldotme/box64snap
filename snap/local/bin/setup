@@ -8,19 +8,10 @@ if [ -f "$MAGIC_FILE" ]; then
     exit 0
 fi
 
-echo "$MAGIC" | sudo tee "$MAGIC_FILE" > /dev/null
-SUCCESS=$?
-if [ "$SUCCESS" != "0" ]; then
-    echo "Failed setting up box64 binfmt handler."
-    exit 1
-fi
+echo "Please run following command to enable box64-with-gles to act as a system-wide x86_64 interpreter:"
+echo ""
+echo "echo \"$MAGIC\" | sudo tee \"$MAGIC_FILE\""
+echo "sudo systemctl restart systemd-binfmt.service"
+echo ""
 
-sudo systemctl restart systemd-binfmt.service
-SUCCESS=$?
-if [ "$SUCCESS" != "0" ]; then
-    echo "Error setting up binfmt support"
-    exit 1
-fi
-
-echo "Successfully set up box64 for x86_64 execution."
 exit 0
