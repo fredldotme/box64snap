@@ -121,6 +121,7 @@ parts:
       - libexpat1
       - libfaudio0
       - libfl2
+      - libgconf-2-4
       - libasound2
       - libbsd0
       - libfuse2
