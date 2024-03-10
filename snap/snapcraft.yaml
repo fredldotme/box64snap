@@ -18,6 +18,10 @@ description: |
   box64-with-gl4es.setup
   ```
 
+  # Enabling GL4ES:
+
+  To make use of GL4ES on GLES-only hardware, export the environment variable `GL4ES=1`.
+
   And done!
 
 grade: stable
