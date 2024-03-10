@@ -97,6 +97,7 @@ parts:
       - util-linux
       - zenity
       - libsdl1.2-compat
+      - libsdl1.2-compat-shim
       - libsdl1.2debian
       - libsdl2-2.0-0
       - libvorbisfile3
