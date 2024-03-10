@@ -14,9 +14,7 @@ description: |
 
   Enable the system-wide interpreter by following the steps in the following command:
 
-  ```
-  box64-with-gl4es.setup
-  ```
+  `box64-with-gl4es.setup`
 
   # Enabling GL4ES:
 
@@ -63,7 +61,7 @@ apps:
 
 parts:
   gl4es:
-    source: https://github.com/ptitSeb/gl4es
+    source: https://github.com/ptitSeb/gl4es.git
     source-type: git
     plugin: cmake
     cmake-parameters:
@@ -72,7 +70,7 @@ parts:
       - cmake
       - libx11-dev
   box64-4k:
-    source: https://github.com/ptitSeb/box64
+    source: https://github.com/ptitSeb/box64.git
     source-type: git
     source-branch: main
     plugin: cmake
@@ -83,7 +81,7 @@ parts:
       - cmake
       - python3
   box64-16k:
-    source: https://github.com/ptitSeb/box64
+    source: https://github.com/ptitSeb/box64.git
     source-type: git
     source-branch: main
     plugin: cmake
