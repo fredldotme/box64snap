@@ -28,10 +28,6 @@ architectures:
 compression: lzo
 
 plugs:
-  binfmt-conf:
-    interface: system-files
-    read:
-      - /etc/binfmt.d
   graphics-core22:
     interface: content
     target: $SNAP/graphics
@@ -60,7 +56,6 @@ apps:
     plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, network, network-bind ]
   setup:
     command: bin/setup
-    plugs: [ binfmt-conf ]
 
 parts:
   gl4es:
