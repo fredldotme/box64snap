@@ -6,9 +6,20 @@ description: |
 
   You can find many Box64 videos on the MicroLinux, Pi Labs or The Byteman YouTube channels.
 
-  Since Box64 uses the native versions of some "system" libraries, like libc, libm, SDL, and OpenGL, it's easy to integrate and use with most applications, and performance can be surprisingly high in many cases. Take a look at thoses bench analysis for an example here.
+  Since Box64 uses the native versions of some "system" libraries, like libc, libm, SDL, and OpenGL, it's easy to integrate and use with most applications, and performance can be surprisingly high in many cases.
 
   Box64 integrates with DynaRec (dynamic recompiler) for the ARM64 platform, providing a speed boost between 5 to 10 times faster than using only the interpreter.
+
+  # Instructions:
+
+  Enable the system-wide interpreter by following the steps in the following command:
+
+  ```
+  box64-with-gl4es.setup
+  ```
+
+  And done!
+
 grade: stable
 confinement: strict
 base: core22
