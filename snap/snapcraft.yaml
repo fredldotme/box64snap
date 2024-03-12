@@ -51,11 +51,11 @@ apps:
   box64:
     command: bin/graphics-core22-wrapper $SNAP/bin/runner
     extensions: [ gnome ]
-    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service ]
+    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, browser-support ]
   wine64:
     command: bin/graphics-core22-wrapper $SNAP/bin/wine64runner
     extensions: [ gnome ]
-    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service ]
+    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, browser-support ]
   setup:
     command: bin/setup
 
