@@ -1,16 +1,18 @@
 #!/bin/bash
 
-MAGIC=":x86_64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00:\xff\xff\xff\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/snap/bin/box64-with-gl4es.box64:"
+MAGIC_SOURCE_FILE="$SNAP/box64snap.conf"
 MAGIC_FILE="/etc/binfmt.d/box64snap.conf"
 
 if [ -f "$MAGIC_FILE" ]; then
-    echo "Setup already done successfully"
-    exit 0
+    if [ "$(sha1sum $MAGIC_FILE | awk '{ print $1 }')" == "$(sha1sum $MAGIC_SOURCE_FILE | awk '{ print $1 }')" ]; then
+        echo "Setup already done successfully"
+        exit 0
+    fi
 fi
 
 echo "Please run following command to enable box64-with-gles to act as a system-wide x86_64 interpreter:"
 echo ""
-echo "echo \"$MAGIC\" | sudo tee \"$MAGIC_FILE\""
+echo "sudo cp \"$MAGIC_SOURCE_FILE\" \"$MAGIC_FILE\""
 echo "sudo systemctl restart systemd-binfmt.service"
 echo ""
 

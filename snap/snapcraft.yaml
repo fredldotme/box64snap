@@ -51,7 +51,11 @@ apps:
   box64:
     command: bin/graphics-core22-wrapper $SNAP/bin/runner
     extensions: [ gnome ]
-    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, network, network-bind ]
+    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service ]
+  wine64:
+    command: bin/graphics-core22-wrapper $SNAP/bin/wine64runner
+    extensions: [ gnome ]
+    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service ]
   setup:
     command: bin/setup
 
@@ -162,6 +166,15 @@ parts:
       - libunwind8
       - libxml2
       - libxslt1.1
+      - libxkbcommon-x11-0
+      - wine
+      - wine64
+    override-prime: |
+      craftctl default
+      ln -sf wine-stable $CRAFT_PRIME/usr/bin/wine
+      ln -sf wine64-stable $CRAFT_PRIME/usr/bin/wine64
+      ln -sf winecfg $CRAFT_PRIME/usr/bin/winecfg
+      sed -i "s/\/usr\/lib\/wine/\$SNAP\/usr\/lib\/wine/g" $CRAFT_PRIME/usr/lib/wine/wineserver
   graphics-core22:
     after: [ runner ]
     source: https://github.com/MirServer/graphics-core.git
