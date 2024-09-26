@@ -10,7 +10,7 @@ fi
 if [ ! -z "$BOX64_LD_LIBRARY_PATH" ]; then
     BOX_NEW_LD="$BOX64_LD_LIBRARY_PATH"
 fi
-export BOX64_LD_LIBRARY_PATH="${BOX_NEW_LD}:$SNAP/usr/lib/x86_64-linux-gnu"
+export BOX64_LD_LIBRARY_PATH="${BOX_NEW_LD}:$SNAP/usr/lib/box64-x86_64-linux-gnu"
 
 if [ ! -z "$GL4ES" ]; then
     export LD_LIBRARY_PATH="$SNAP/usr/lib/gl4es:$LD_LIBRARY_PATH"
