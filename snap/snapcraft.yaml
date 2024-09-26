@@ -59,6 +59,10 @@ apps:
   setup:
     command: bin/setup
 
+lint:
+  ignore:
+    - library
+
 parts:
   gl4es:
     source: https://github.com/ptitSeb/gl4es.git
