@@ -6,6 +6,9 @@ fi
 if [ -z "$BOX64_NOBANNER" ]; then
     export BOX64_NOBANNER=1
 fi
+if [ -z "$BOX64_RCFILE" ]; then
+    export BOX64_RCFILE="$SNAP/box64.box64rc"
+fi
 
 if [ ! -z "$BOX64_LD_LIBRARY_PATH" ]; then
     BOX_NEW_LD="$BOX64_LD_LIBRARY_PATH"

@@ -51,11 +51,11 @@ apps:
   box64:
     command: bin/graphics-core22-wrapper $SNAP/bin/runner
     extensions: [ gnome ]
-    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, browser-support, hardware-observe ]
+    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, browser-support, hardware-observe, fuse-support ]
   wine64:
     command: bin/graphics-core22-wrapper $SNAP/bin/wine64runner
     extensions: [ gnome ]
-    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, browser-support, hardware-observe ]
+    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, browser-support, hardware-observe, fuse-support ]
   setup:
     command: bin/setup
 
@@ -80,6 +80,9 @@ parts:
     build-packages:
       - cmake
       - python3
+    override-prime: |
+      craftctl default
+      cp $CRAFT_PART_SRC_WORK/system/box64.box64rc $CRAFT_PRIME/
   box64-16k:
     source: https://github.com/ptitSeb/box64.git
     source-type: git
