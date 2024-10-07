@@ -74,7 +74,7 @@ parts:
       - -DGLVND=OFF
       - -DNOX11=OFF
       - -DNOEGL=OFF
-      - -DEGL_WRAPPER=ON
+      - -DEGL_WRAPPER=OFF
       - -DNO_GBM=OFF
     build-packages:
       - cmake
@@ -89,7 +89,7 @@ parts:
       - -DGLVND=OFF
       - -DNOX11=OFF
       - -DNOEGL=OFF
-      - -DEGL_WRAPPER=ON
+      - -DEGL_WRAPPER=OFF
       - -DNO_GBM=ON
     build-packages:
       - cmake
