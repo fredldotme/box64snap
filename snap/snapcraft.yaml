@@ -64,12 +64,33 @@ lint:
     - library
 
 parts:
-  gl4es:
+  gl4es-gbm:
     source: https://github.com/ptitSeb/gl4es.git
     source-type: git
     plugin: cmake
     cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/gl4es-gbm
       - -DNO_CONF_INSTALL=1
+      - -DGLVND=OFF
+      - -DNOX11=OFF
+      - -DNOEGL=OFF
+      - -DEGL_WRAPPER=ON
+      - -DNO_GBM=OFF
+    build-packages:
+      - cmake
+      - libx11-dev
+  gl4es-nogbm:
+    source: https://github.com/ptitSeb/gl4es.git
+    source-type: git
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/gl4es-nogbm
+      - -DNO_CONF_INSTALL=1
+      - -DGLVND=OFF
+      - -DNOX11=OFF
+      - -DNOEGL=OFF
+      - -DEGL_WRAPPER=ON
+      - -DNO_GBM=ON
     build-packages:
       - cmake
       - libx11-dev
@@ -101,7 +122,7 @@ parts:
       - cmake
       - python3
   runner:
-    after: [ box64-4k, box64-16k ]
+    after: [ box64-4k, box64-16k, gl4es-gbm, gl4es-nogbm ]
     source: snap/local
     plugin: dump
     stage-packages:
