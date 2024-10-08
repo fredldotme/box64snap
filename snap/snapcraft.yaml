@@ -65,11 +65,13 @@ lint:
 
 parts:
   gl4es-gbm:
-    source: https://github.com/ptitSeb/gl4es.git
+    source: https://github.com/fredldotme/gl4es.git
+    source-branch: box64andwine
     source-type: git
     plugin: cmake
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/gl4es-gbm
+      - -DMULTIARCH_PREFIX=$CRAFT_ARCH_TRIPLET
       - -DNO_CONF_INSTALL=1
       - -DGLVND=OFF
       - -DNOX11=OFF
@@ -80,11 +82,13 @@ parts:
       - cmake
       - libx11-dev
   gl4es-nogbm:
-    source: https://github.com/ptitSeb/gl4es.git
+    source: https://github.com/fredldotme/gl4es.git
+    source-branch: box64andwine
     source-type: git
     plugin: cmake
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/gl4es-nogbm
+      - -DMULTIARCH_PREFIX=$CRAFT_ARCH_TRIPLET
       - -DNO_CONF_INSTALL=1
       - -DGLVND=OFF
       - -DNOX11=OFF
