@@ -18,7 +18,7 @@ description: |
 
   # Enabling GL4ES:
 
-  To make use of GL4ES on GLES-only hardware, export the environment variable `GL4ES=1`.
+  To make use of GL4ES on GLES-only hardware, export the environment variable `GL4ES=1`. To use GL4ES on non-GBM systems like libhybris, export the environment variable `GL4ES_GBM=0`.
 
   And done!
 
