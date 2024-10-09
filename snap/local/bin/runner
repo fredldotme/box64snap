@@ -10,6 +10,31 @@ if [ -z "$BOX64_RCFILE" ]; then
     export BOX64_RCFILE="$SNAP/box64.box64rc"
 fi
 
+# From https://github.com/brlin-tw/debian-multiarch-triplet-provider-launch
+case "${SNAP_ARCH}" in
+    # These are the special cases
+    amd64)
+        X_DEBIAN_MULTIARCH_TRIPLET=x86_64-linux-gnu
+    ;;
+    armel)
+        X_DEBIAN_MULTIARCH_TRIPLET=arm-linux-gnueabi
+    ;;
+    armhf)
+        X_DEBIAN_MULTIARCH_TRIPLET=arm-linux-gnueabihf
+    ;;
+    arm64)
+        X_DEBIAN_MULTIARCH_TRIPLET=aarch64-linux-gnu
+    ;;
+    ppc64el)
+        X_DEBIAN_MULTIARCH_TRIPLET=powerpc64le-linux-gnu
+    ;;
+    # Consider rest of them not exceptions
+    s390x \
+    |*)
+        X_DEBIAN_MULTIARCH_TRIPLET="${SNAP_ARCH}"-linux-gnu
+    ;;
+esac
+
 if [ ! -z "$BOX64_LD_LIBRARY_PATH" ]; then
     BOX_NEW_LD="$BOX64_LD_LIBRARY_PATH"
 fi
@@ -18,7 +43,7 @@ export BOX64_LD_LIBRARY_PATH="${BOX_NEW_LD}:$SNAP/usr/lib/box64-x86_64-linux-gnu
 if [ ! -z "$GL4ES" ]; then
     [ -z "$GL4ES_GBM" ] && GL4ES_GBM=1
     [ "$GL4ES_GBM" = "0" ] && GL4ES_LIB_PATH="$SNAP/gl4es-nogbm" || GL4ES_LIB_PATH="$SNAP/gl4es-gbm"
-    export LD_LIBRARY_PATH="$GL4ES_LIB_PATH/lib/gl4es:$LD_LIBRARY_PATH"
+    export LD_LIBRARY_PATH="$GL4ES_LIB_PATH/usr/lib/${X_DEBIAN_MULTIARCH_TRIPLET}/gl4es:$LD_LIBRARY_PATH"
 fi
 
 PREFIX="4k"
