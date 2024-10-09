@@ -76,8 +76,7 @@ parts:
       - -DGLVND=OFF
       - -DNOX11=OFF
       - -DNOEGL=OFF
-      - -DEGL_WRAPPER=OFF
-      - -DNO_GBM=OFF
+      - -DHYBRIS=OFF
     build-packages:
       - cmake
       - libx11-dev
@@ -93,8 +92,7 @@ parts:
       - -DGLVND=OFF
       - -DNOX11=OFF
       - -DNOEGL=OFF
-      - -DEGL_WRAPPER=OFF
-      - -DNO_GBM=ON
+      - -DHYBRIS=ON
     build-packages:
       - cmake
       - libx11-dev
