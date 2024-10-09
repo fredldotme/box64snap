@@ -40,6 +40,9 @@ if [ ! -z "$BOX64_LD_LIBRARY_PATH" ]; then
 fi
 export BOX64_LD_LIBRARY_PATH="${BOX_NEW_LD}:$SNAP/usr/lib/box64-x86_64-linux-gnu"
 
+# Prefer SDL1.2-compat over SDL1.2-debian
+export LD_LIBRARY_PATH="$SNAP/usr/lib/$X_DEBIAN_MULTIARCH_TRIPLET/sdl12-compat:$LD_LIBRARY_PATH"
+
 if [ ! -z "$GL4ES" ]; then
     [ -z "$GL4ES_GBM" ] && GL4ES_GBM=1
     [ "$GL4ES_GBM" = "0" ] && GL4ES_LIB_PATH="$SNAP/gl4es-nogbm" || GL4ES_LIB_PATH="$SNAP/gl4es-gbm"
