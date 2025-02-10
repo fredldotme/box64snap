@@ -38,7 +38,7 @@ esac
 if [ ! -z "$BOX64_LD_LIBRARY_PATH" ]; then
     BOX_NEW_LD="$BOX64_LD_LIBRARY_PATH"
 fi
-export BOX64_LD_LIBRARY_PATH="${BOX_NEW_LD}:$SNAP/usr/lib/box64-x86_64-linux-gnu"
+export BOX64_LD_LIBRARY_PATH="${BOX_NEW_LD}:$SNAP/usr/lib/box64-x86_64-linux-gnu:$SNAP/usr/lib/x86_64-linux-gnu"
 
 # Prefer SDL1.2-compat over SDL1.2-debian
 export LD_LIBRARY_PATH="$SNAP/usr/lib/$X_DEBIAN_MULTIARCH_TRIPLET/sdl12-compat:$LD_LIBRARY_PATH"

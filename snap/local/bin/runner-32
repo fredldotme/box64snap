@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ -z "$BOX64_LOG" ]; then
+    export BOX64_LOG=0
+fi
+if [ -z "$BOX64_NOBANNER" ]; then
+    export BOX64_NOBANNER=1
+fi
+if [ -z "$BOX64_RCFILE" ]; then
+    export BOX64_RCFILE="$SNAP/box64.box64rc"
+fi
+
+if [ ! -z "$BOX64_LD_LIBRARY_PATH" ]; then
+    BOX_NEW_LD="$BOX64_LD_LIBRARY_PATH"
+fi
+export BOX64_LD_LIBRARY_PATH="${BOX_NEW_LD}:$SNAP/usr/lib/box64-i386-linux-gnu:$SNAP/usr/lib/i386-linux-gnu"
+
+if [ ! -z "$GL4ES" ]; then
+    export LD_LIBRARY_PATH="$SNAP/usr/lib/gl4es:$LD_LIBRARY_PATH"
+fi
+
+PREFIX="4k"
+if [ "$(getconf PAGESIZE)" = "16384" ]; then
+    PREFIX="16k"
+fi
+
+export PATH="/snap/box64-with-gles/current/usr/bin:$PATH"
+
+exec "$SNAP/$PREFIX/bin/box64" $@

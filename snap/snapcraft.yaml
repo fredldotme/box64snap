@@ -36,6 +36,8 @@ plugs:
     default-provider: mesa-core22
 
 layout:
+  /usr/share/alsa:
+    bind: $SNAP/usr/share/alsa
   /usr/share/libdrm:
     bind: $SNAP/graphics/libdrm
   /usr/share/drirc.d:
@@ -47,13 +49,33 @@ layout:
   /usr/share/zenity:
     symlink: $SNAP/usr/share/zenity
 
+package-repositories:
+  - type: apt
+    formats: [deb]
+    architectures: [i386, amd64]
+    components: [main universe multiverse]
+    suites: [jammy jammy-updates jammy-backports]
+    key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
+    url: http://archive.ubuntu.com/ubuntu/
+  - type: apt
+    formats: [deb]
+    architectures: [armhf]
+    components: [main universe multiverse]
+    suites: [jammy jammy-updates jammy-backports]
+    key-id: F6ECB3762474EDA9D21B7022871920D1991BC93C
+    url: http://ports.ubuntu.com/ubuntu-ports/
+
 apps:
   box64:
     command: bin/graphics-core22-wrapper $SNAP/bin/runner
     extensions: [ gnome ]
     plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, browser-support, hardware-observe, fuse-support ]
+  box32:
+    command: bin/graphics-core22-wrapper $SNAP/bin/runner-32
+    extensions: [ gnome ]
+    plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, browser-support, hardware-observe, fuse-support ]
   wine64:
-    command: bin/graphics-core22-wrapper $SNAP/bin/wine64runner
+    command: bin/graphics-core22-wrapper $SNAP/bin/winerunner
     extensions: [ gnome ]
     plugs: [ home, removable-media, audio-record, audio-playback, alsa, wayland, x11, desktop, desktop-legacy, gsettings, opengl, mount-observe, calendar-service, browser-support, hardware-observe, fuse-support ]
   setup:
@@ -104,6 +126,7 @@ parts:
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/4k
       - -DNO_CONF_INSTALL=1
+      - -DBOX32=1
     build-packages:
       - cmake
       - python3
@@ -120,6 +143,7 @@ parts:
       - -DM1=1
       - -DNO_CONF_INSTALL=1
       - -DNO_LIB_INSTALL=1
+      - -DBOX32=1
     build-packages:
       - cmake
       - python3
@@ -133,7 +157,6 @@ parts:
       - libsdl1.2-compat
       - libsdl1.2-compat-shim
       - libsdl1.2debian
-      - libsdl2-2.0-0
       - libvorbisfile3
       - libalure1
       - libalut0
@@ -197,7 +220,100 @@ parts:
       - libxml2
       - libxslt1.1
       - libxkbcommon-x11-0
+      - libvorbisfile3:i386
+      - libatk-bridge2.0-0:i386
+      - libatspi2.0-0:i386
+      - libbz2-1.0:i386
+      - libcairo2:i386
+      - libcap2:i386
+      - libcrypt1:i386
+      - libcurl4:i386
+      - libcairo2:i386
+      - libdbus-glib-1-2:i386
+      - libevent-2.1-7:i386
+      - libexpat1:i386
+      - libfl2:i386
+      - libpixman-1-0:i386
+      - libasound2:i386
+      - libbsd0:i386
+      - libharfbuzz0b:i386
+      - libnuma1:i386
+      - libogg0:i386
+      - libsndfile1:i386
+      - libtinfo6:i386
+      - libsdl2-2.0-0:i386
+      - libsdl2-gfx-1.0-0:i386
+      - libsdl2-image-2.0-0:i386
+      - libsdl2-mixer-2.0-0:i386
+      - libsdl-image1.2:i386
+      - libsdl-net1.2:i386
+      - libsdl-ttf2.0-0:i386
+      - libsdl1.2debian:i386
+
+      - libvorbisfile3:amd64
+      - libatk-bridge2.0-0:amd64
+      - libatspi2.0-0:amd64
+      - libayatana-appindicator3-1:amd64
+      - libbz2-1.0:amd64
+      - libcairo2:amd64
+      - libcap2:amd64
+      - libcrypt1:amd64
+      - libcurl4:amd64
+      - libcairo2:amd64
+      - libdbus-glib-1-2:amd64
+      - libevent-2.1-7:amd64
+      - libexpat1:amd64
+      - libfl2:amd64
+      - libpixman-1-0:amd64
+      - libasound2:amd64
+      - libbsd0:amd64
+      - libharfbuzz0b:amd64
+      - libnuma1:amd64
+      - libogg0:amd64
+      - libsndfile1:amd64
+      - libtinfo6:amd64
+      - libsdl2-2.0-0:amd64
+      - libsdl2-gfx-1.0-0:amd64
+      - libsdl2-image-2.0-0:amd64
+      - libsdl2-mixer-2.0-0:amd64
+      - libsdl1.2debian:amd64
+      - libsdl-image1.2:amd64
+      - libsdl-net1.2:amd64
+      - libsdl-ttf2.0-0:amd64
+
+      - libvorbisfile3:armhf
+      - libatk-bridge2.0-0:armhf
+      - libatspi2.0-0:armhf
+      - libayatana-appindicator3-1:armhf
+      - libbz2-1.0:armhf
+      - libcairo2:armhf
+      - libcap2:armhf
+      - libcrypt1:armhf
+      - libcurl4:armhf
+      - libcairo2:armhf
+      - libdbus-glib-1-2:armhf
+      - libevent-2.1-7:armhf
+      - libexpat1:armhf
+      - libfl2:armhf
+      - libpixman-1-0:armhf
+      - libasound2:armhf
+      - libbsd0:armhf
+      - libharfbuzz0b:armhf
+      - libnuma1:armhf
+      - libogg0:armhf
+      - libsndfile1:armhf
+      - libtinfo6:armhf
+      - libsdl2-2.0-0:armhf
+      - libsdl2-gfx-1.0-0:armhf
+      - libsdl2-image-2.0-0:armhf
+      - libsdl2-mixer-2.0-0:armhf
+      - libsdl1.2debian:armhf
+      - libsdl-image1.2:armhf
+      - libsdl-net1.2:armhf
+      - libsdl-ttf2.0-0:armhf
+
       - wine
+      - wine32
       - wine64
     override-prime: |
       craftctl default
